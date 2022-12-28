@@ -78,6 +78,8 @@ player1 = Player.new('X')
 player2 = Player.new('O')
 board = Board.new
 board.print_board
+puts("For 2 players. Take sequential turns. X is first to move. To enter the square, enter the array coordinates as a string")
+puts("00 is top left. 22 is bottom right. If you enter the wrong input your turn will be skipped.")
 while board.game_over == false
   board.turn(player1, gets.strip)
   board.print_board
