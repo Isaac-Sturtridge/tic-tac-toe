@@ -22,13 +22,13 @@ class Player
     length_sums.push(scores[2][0] + scores[1][1] + scores[0][2])
   end
 
-  def test_game_over(player)
+  def test_game_over(player, board)
     player.sum_player_scores
     if player.length_sums.include? 15
-      game_over = true
-      print("Player #{player.side} wins!")
+      board.game_over = true
+      puts("Player #{player.side} wins!")
     else
-      print("The game continues \n")
+      puts("The game continues")
       player.length_sums = []
     end
   end
@@ -78,13 +78,19 @@ player1 = Player.new('X')
 player2 = Player.new('O')
 board = Board.new
 board.print_board
+
+def full_game_turn(player, board)
+  board.turn(player, gets.strip)
+  board.print_board
+  player.test_game_over(player, board)
+end
+
 puts("For 2 players. Take sequential turns. X is first to move. To enter the square, enter the array coordinates as a string")
 puts("00 is top left. 22 is bottom right. If you enter the wrong input your turn will be skipped.")
 while board.game_over == false
-  board.turn(player1, gets.strip)
-  board.print_board
-  player1.test_game_over(player1)
-  board.turn(player2, gets.strip)
-  board.print_board
-  player2.test_game_over(player2)
+  full_game_turn(player1, board)
+  if board.game_over == true
+    break
+  end
+  full_game_turn(player2, board)
 end
